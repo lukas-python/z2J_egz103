@@ -51,8 +51,6 @@ function switchMove() {
 }
 // Initializing game
 function startGame() {
-    const playAgainBtn = document.getElementById("playAgain");
-    playAgainBtn.classList.add("hidden");
     const infoForUser = confirm("Zaczynamy grę?");
     if (infoForUser === true) {
         alert("Świetnie. Gramy!\nGracz ze znakiem X zaczyna. Wybierz dowolne pole za pomocą myszy");
@@ -85,31 +83,34 @@ function checkWin(mark) {
 function winningInfo(){
     if (checkWin(userMark)){
         alert("Wygrałeś");
-        showButton()
-        hideButton();
-
+        createButton();
+        removeButton();
     }
     else if (checkWin(computerMark)){
         alert("Komputer wygrał");
-        showButton()
-        hideButton();
+        createButton();
+        removeButton();
     }
     gameIsOn = false;
 }
 
 // Function for appearing the play again button
-function showButton(){
-    const playAgainBtn = document.getElementById("playAgain");
-    playAgainBtn.style.display="block";
+function createButton(){
+    const playAgainBtn = document.createElement("button");
+    playAgainBtn.innerText = "Zagraj jeszcze raz";
+    playAgainBtn.id = "playAgain";
+    document.body.appendChild(playAgainBtn);
 }
-// Function for disappearing play again button
-function hideButton(){
+
+// Function for removing button
+function removeButton(){
     const playAgainButton = document.getElementById("playAgain");
     playAgainButton.addEventListener("click", function(){
-        playAgainButton.style.display="none";
         restartGame();
-    });
+        playAgainButton.remove();
+    })
 }
+
 // Function for restarting game
 function restartGame(){
     for (let i=0; i < playFields.length; i++){
